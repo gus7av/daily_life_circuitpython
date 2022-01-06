@@ -14,8 +14,8 @@ count = 1
 def start_timer():
     cp.play_tone(board.IO3, 500, 0.1)
     cp.play_tone(board.IO3, 1000, 0.1)
-    btn.disable()
-    sec = count * 60
+    btn.deinit()
+    sec = count * 1
     time_alarm = alarm.time.TimeAlarm(monotonic_time=time.monotonic() + sec)
     pin_alarm = alarm.pin.PinAlarm(pin=board.IO0, value=False, pull=True)
     alarm.exit_and_deep_sleep_until_alarms(time_alarm, pin_alarm)
@@ -25,7 +25,7 @@ def power_down():
     cp.play_tone(board.IO3, 500, 0.1)
     while not btn.value:
         time.sleep(0.1)
-    btn.disable()
+    btn.deinit()
     pin_alarm = alarm.pin.PinAlarm(pin=board.IO0, value=False, pull=True)
     alarm.exit_and_deep_sleep_until_alarms(pin_alarm)
 
