@@ -1,12 +1,16 @@
 import circuitpython_essentials as cp
 import time
-from random import randint
 import board
+from random import randint
 
-led = cp.output(board.LED)
-value = 32767
+led = cp.pwm_output(board.LED)
+previous = 128
 
 while True:
-    value += randint(max(-4, -value), min(4, 65535 - value))
-    led.value = value
-    time.sleep(0.001)
+    value = randint(64, 247)
+    step = min(1, max(-1, value - previous))
+    if step != 0:
+        for i in range(previous, value, step):
+            led.value = (i + randint(-8, 8)) * 255
+            time.sleep(0.001)
+    previous = value
