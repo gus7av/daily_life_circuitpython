@@ -9,4 +9,4 @@ value = 32767
 while True:
     value += randint(max(-4, -value), min(4, 65535 - value))
     led.value = value
-    time.sleep(0.01)
+    time.sleep(0.001)
