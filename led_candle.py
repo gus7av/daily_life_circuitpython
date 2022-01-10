@@ -4,13 +4,14 @@ import board
 from random import randint
 
 led = cp.pwm_output(board.LED)
-previous = 128
+previous = 32767
+flicker = 8191
 
 while True:
-    value = randint(64, 247)
-    step = min(1, max(-1, value - previous))
+    value = randint(flicker, 65535 - flicker)
+    step = min(255, max(-255, value - previous))
     if step != 0:
         for i in range(previous, value, step):
-            led.value = (i + randint(-8, 8)) * 255
+            led.value = i + randint(-flicker, flicker)
             time.sleep(0.001)
     previous = value
