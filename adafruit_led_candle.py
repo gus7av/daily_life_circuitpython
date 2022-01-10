@@ -1,3 +1,5 @@
+# Adapted to a single led from: https://learn.adafruit.com/circuit-playground-jack-o-lantern
+
 import circuitpython_essentials as cp
 import board
 import random
