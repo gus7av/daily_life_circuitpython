@@ -1,5 +1,5 @@
      _______________
-EN -| LOLIN S2 mini |- I039
+EN -| LOLIN S2 mini |- IO39
 A0 -|               |- IO37
 D0 -|     _____     |- D1
 D5 -|    |     |    |- D2 (SDA)
