@@ -1,0 +1,8 @@
+EN -| LOLIN S2 mini |- I039
+A0 -|               |- IO37
+D0 -|               |- D1
+D5 -|               |- D2 (SDA)
+D6 -|               |- D3 (SCL)
+D7 -|               |- D4
+D8 -|               |- GND
+3V -|      USB      |- VBUS
