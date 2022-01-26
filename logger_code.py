@@ -7,7 +7,11 @@ led = cp.output(board.LED)
 try:
     with open("/temperature.txt", "a") as fp:
         temp = cp.temperature()
-        fp.write('{0:.2f}\n'.format(temp))
+        time_passed = time.monotonic()
+        hours = int(time_passed / 3600)
+        minutes = int((time_passed % 3600) / 60)
+        seconds = int(time_passed % 60)        
+        fp.write('{0:02}:{1:02}:{2:02},{3:.2f}\n'.format(hours, minutes, seconds, temp))
         fp.flush()
         cp.deep_sleep(600)
 except OSError as e:
