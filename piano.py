@@ -1,10 +1,12 @@
 import circuitpython_essentials as cp
 import board
-# import time
 
 c_major = 262, 294, 330, 349, 392, 440, 494, 523
 a_minor = 220, 247, 262, 294, 330, 349, 392, 440
-scales = c_major, a_minor
+g_major = 196, 220, 247, 262, 294, 330, 370, 392
+e_minor = 165, 185, 196, 220, 247, 262, 294, 330
+
+scales = c_major, a_minor, g_major, e_minor
 current_scale = 0
 
 next_scale = cp.input_pullup(board.D9)
@@ -27,7 +29,7 @@ while True:
         current_scale += 1
         current_scale = min(current_scale, (len(scales)-1))
     previous = value
-    
+
     value_2 = prev_scale.value
     if not value_2 and previous_2:
         current_scale -= 1
