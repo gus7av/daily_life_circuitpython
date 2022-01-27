@@ -1,13 +1,15 @@
 import circuitpython_essentials as cp
 import board
 
+f_major = 174, 196, 220, 233, 262, 294, 330, 349
+d_minor = 294, 330, 349, 392, 440, 466, 523, 587
 c_major = 262, 294, 330, 349, 392, 440, 494, 523
 a_minor = 220, 247, 262, 294, 330, 349, 392, 440
 g_major = 196, 220, 247, 262, 294, 330, 370, 392
 e_minor = 165, 185, 196, 220, 247, 262, 294, 330
 
-scales = c_major, a_minor, g_major, e_minor
-current_scale = 0
+scales = f_major, d_minor, c_major, a_minor, g_major, e_minor
+current_scale = 2
 
 next_scale = cp.input_pullup(board.D9)
 prev_scale = cp.input_pullup(board.D10)
