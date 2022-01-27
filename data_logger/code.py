@@ -13,7 +13,7 @@ try:
         seconds = int(time_passed % 60)        
         fp.write('{0:02}:{1:02}:{2:02},{3:.2f}\n'.format(hours, minutes, seconds, temp))
         fp.flush()
-        cp.deep_sleep(600)
+        cp.deep_sleep(10)
 except OSError as e:
     delay = 0.5
     if e.args[0] == 28:
