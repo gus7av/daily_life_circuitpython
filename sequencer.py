@@ -9,9 +9,9 @@ g_major = 196, 220, 247, 262, 294, 330, 370, 392
 e_minor = 165, 185, 196, 220, 247, 262, 294, 330
 
 keys = f_major, d_minor, c_major, a_minor, g_major, e_minor
-key_pot = cp.analog_input(board.A9)
-tempo_pot = cp.analog_input(board.A10)
-pins = board.A1, board.A2, board.A3, board.A4
+key_pot = cp.analog_input(board.A8)
+tempo_pot = cp.analog_input(board.A7)
+pins = board.A2, board.A3, board.A4, board.A5
 step_pots = []
 for f in range(len(pins)):
     step_pots.append(cp.analog_input(pins[f]))
@@ -21,4 +21,4 @@ while True:
         tempo = round(cp.map(tempo_pot.value, 0, 0xFFFF, 0, 1), 2)
         key = round(cp.map(key_pot.value, 0, 0xFFFF, 0, (len(keys)-1)))
         note = round(cp.map(step_pots[f].value, 0, 0xFFFF, 0, 7))
-        cp.play_tone(board.A7, keys[key][note], tempo)
+        cp.play_tone(board.A6, keys[key][note], tempo)
