@@ -16,8 +16,7 @@ step_pots = []
 for f in range(len(pins)):
     step_pots.append(cp.analog_input(pins[f]))
 
-while True:
-    
+while True:   
     for f in range(len(step_pots)):
         tempo = round(cp.map(tempo_pot.value, 0, 0xFFFF, 0, 1), 2)
         key = round(cp.map(key_pot.value, 0, 0xFFFF, 0, (len(keys)-1)))
