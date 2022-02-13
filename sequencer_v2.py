@@ -11,7 +11,7 @@ def circle_of_fifths(scale, step, minor=False):
   if minor:
     return tones[(scale * fifth + parallel + minor[step]) % len(tones)]
   else:
-    return tones[(major[step] + scale * fifth) % len(tones)]
+    return tones[(scale * fifth + major[step]) % len(tones)]
 
 key_pot = cp.analog_input(board.A8)
 tempo_pot = cp.analog_input(board.A7)
@@ -24,6 +24,6 @@ while True:
     for f in range(len(step_pots)):
         tempo = round(cp.map(tempo_pot.value, 0, 0xFFFF, 0, 1), 2)
         key = round(cp.map(key_pot.value, 0, 0xFFFF, 0, (len(tones)-1)))
-        step = round(cp.map(step_pots[f].value, 0, 0xFFFF, 0, 7))
+        step = round(cp.map(step_pots[f].value, 0, 0xFFFF, 0, 6))
         note = circle_of_fifths(key, step) # + knap eller switch til at toggle minor
         cp.play_tone(board.A6, note, tempo)
