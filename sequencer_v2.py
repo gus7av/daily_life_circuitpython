@@ -25,5 +25,5 @@ while True:
         tempo = round(cp.map(tempo_pot.value, 0, 0xFFFF, 0, 1), 2)
         key = round(cp.map(key_pot.value, 0, 0xFFFF, 0, (len(tones)-1)))
         step = round(cp.map(step_pots[f].value, 0, 0xFFFF, 0, 6))
-        note = circle_of_fifths(key, step) # + knap eller switch til at toggle minor
+        note = circle_of_fifths(key, step) # mangler knap eller switch til at toggle parallel
         cp.play_tone(board.A6, note, tempo)
