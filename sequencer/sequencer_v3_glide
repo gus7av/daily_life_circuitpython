@@ -15,12 +15,27 @@ stored_value = [196] * 16
 while True:
     for f in range(16):
         speed = round(cp.map(speed_pot.value, 0, 0xFFFF, 0, 1), 2)
-        tone = tones[round(cp.map(tone_pot.value, 0, 0xFFFF, 0, len(tones)-1))]
+        tone = round(cp.map(tone_pot.value, 0, 0xFFFF, 0, len(tones)-1))
+        tone = tones[tone]
         if not btn_pin.value:
             stored_value[f] = tone
-        step = (stored_value[f-1]-stored_value[f])/10
+        delta = stored_value[f] - stored_value[f-1]
+        step = min(1, max(-1, delta))
         if step != 0:
+            timer = time.monotonic()
             for i in range(stored_value[f-1], stored_value[f], step):
-                audio_pin.value = round(stored_value[f-1] + i)
-                time.sleep(speed/20)
-            time.sleep(speed/2)
+                audio_pin.value = i
+            rest = speed - (time.monotonic() - timer)
+            if rest > 0:
+                time.sleep(rest)
+        else:
+            timer = time.monotonic()
+            for i in range(0, 0x8000, 512):
+                audio_pin.volume = i
+            rest = speed - (time.monotonic() - timer) * 2
+            if rest > 0:
+                time.sleep(rest)
+            for i in range(0x8000, 0, -512):
+                audio_pin.volume = i
+        print(rest)
+
