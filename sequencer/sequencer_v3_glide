@@ -1,0 +1,26 @@
+import circuitpython_essentials as cp
+import board
+import time
+
+gnd_pin = cp.output(board.D1)
+btn_pin = cp.input_pullup(board.D4)
+tone_pot = cp.analog_input(board.A6)
+speed_pot = cp.analog_input(board.A8)
+audio_pin = cp.tone_output(board.D7)
+
+gnd_pin.value = False
+tones = [196, 220, 247, 262, 294, 330, 370, 392]  # g-major
+stored_value = [196] * 16
+
+while True:
+    for f in range(16):
+        speed = round(cp.map(speed_pot.value, 0, 0xFFFF, 0, 1), 2)
+        tone = tones[round(cp.map(tone_pot.value, 0, 0xFFFF, 0, len(tones)-1))]
+        if not btn_pin.value:
+            stored_value[f] = tone
+        step = (stored_value[f-1]-stored_value[f])/10
+        if step != 0:
+            for i in range(stored_value[f-1], stored_value[f], step):
+                audio_pin.value = round(stored_value[f-1] + i)
+                time.sleep(speed/20)
+            time.sleep(speed/2)
