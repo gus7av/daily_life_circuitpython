@@ -8,7 +8,12 @@ speaker = cp.tone_output(board.D5)
 
 tones = [196, 220, 247, 262, 294, 330, 370, 392]  # g-major
 stored_value = [0] * 16
-speed = cp.map(tone_pot.value, 0, 0xFFFF, 0.6, 0.1)
+
+value = cp.map(tone_pot.value, 0, 0xFFFF, 0.5, 0)
+min_speed = 0.1
+speed = value + min_speed
+sustain = min_speed*0.5 + value*0.1
+
 
 while True:
     for f in range(16):
@@ -22,14 +27,22 @@ while True:
         if stored_value[f] == 0 or stored_value[f] == 7:
             for i in range(tones[stored_value[f]], tones[stored_value[f]]-100, -10):
                 speaker.value = i
-                time.sleep(speed/20)
+                time.sleep(sustain/10)
             speaker.stop()
-            time.sleep(speed/2)
+            time.sleep(speed-sustain)
 
         # synth tones on the rest
         else:
+            """
+            # synth-sound
             speaker.value = tones[stored_value[f]]
             for i in range(0x8000, 0, -0x800):
                 speaker.volume = i
                 time.sleep(speed/16)
+            speaker.stop()
+            """
+            
+            # basic-sound
+            speaker.value = tones[stored_value[f]]
+            time.sleep(speed)
             speaker.stop()
