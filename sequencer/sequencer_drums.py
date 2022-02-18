@@ -14,6 +14,30 @@ min_speed = 0.1
 speed = value + min_speed
 sustain = min_speed*0.5 + value*0.1
 
+def glide():
+    step = round((tones[stored_value[f]] - tones[stored_value[f-1]])/10)
+    if step != 0:
+        for i in range(10):
+            speaker.value = tones[stored_value[f-1]] + i*step
+            time.sleep(sustain/10)
+        time.sleep(speed-sustain)
+        speaker.stop()
+    else:
+        speaker.value = tones[stored_value[f]]
+        time.sleep(speed)
+        speaker.stop()
+ 
+def synth(): 
+    speaker.value = tones[stored_value[f]]
+    for i in range(0x8000, 0, -0x800):
+        speaker.volume = i
+        time.sleep(speed/16)
+    speaker.stop()
+    
+def basic():
+    speaker.value = tones[stored_value[f]]
+    time.sleep(speed)
+    speaker.stop()
 
 while True:
     for f in range(16):
@@ -31,18 +55,8 @@ while True:
             speaker.stop()
             time.sleep(speed-sustain)
 
-        # synth tones on the rest
+        # chose tone type for the rest
         else:
-            """
-            # synth-sound
-            speaker.value = tones[stored_value[f]]
-            for i in range(0x8000, 0, -0x800):
-                speaker.volume = i
-                time.sleep(speed/16)
-            speaker.stop()
-            """
-            
-            # basic-sound
-            speaker.value = tones[stored_value[f]]
-            time.sleep(speed)
-            speaker.stop()
+            glide()
+            # synth()
+            # basic()
