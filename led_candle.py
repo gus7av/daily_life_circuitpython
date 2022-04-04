@@ -3,7 +3,7 @@ import time
 import board
 from random import randint
 
-led = cp.pwm_output(board.LED)
+led = cp.PWMOut(board.LED)
 previous = 0x8000
 flicker = 0x2000
 
