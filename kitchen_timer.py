@@ -3,7 +3,8 @@ import time
 import board
 import alarm
 
-btn = cp.input_pullup(board.IO0)
+btn = cp.DigitalIn(board.IO0)
+btn.pull_up()
 time_out = 2  # seconds
 debounce = 0.1
 
