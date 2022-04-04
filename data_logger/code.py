@@ -2,7 +2,7 @@ import circuitpython_essentials as cp
 import time
 import board
 
-led = cp.output(board.LED)
+led = cp.DigitalOut(board.LED)
 
 try:
     with open("/temperature.txt", "a") as fp:
