@@ -62,7 +62,7 @@ while True:
             speaker.stop()
             time.sleep(duration)
         
-        #glide from previous tone
+        # glide from previous tone on the rest
         else:
             note = scale[stored_value[f]]
             step = round((note - previous_note) / 10)
