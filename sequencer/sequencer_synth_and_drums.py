@@ -39,29 +39,34 @@ sustain = min_duration * 0.5 + value * 0.1
 
 while True:
     for f in range(steps):
-        tone = round(cp.map_range(tone_pot.value, 0, 0xFFFF, 0, len(scale) - 1))
 
         # delete button
         if not del_pin.value:
             stored_value[f] = 8
-        
+
         # record button
         if not rec_pin.value:
-            stored_value[f] = tone
-        
+            stored_value[f] = round(
+                cp.map_range(tone_pot.value, 0, 0xFFFF, 0, len(scale) - 1)
+            )
+
         # percussion tones on 0 and 7
         if stored_value[f] == 0 or stored_value[f] == 7:
-            for i in range(scale[stored_value[f]], scale[stored_value[f]] - 100, -10):
+            for i in range(
+                scale[stored_value[f]],
+                int(scale[stored_value[f]] / 2),
+                -int(scale[stored_value[f]] / 20),
+            ):
                 speaker.value = i
                 time.sleep(sustain / 10)
             speaker.stop()
             time.sleep(duration - sustain)
-        
+
         # silence on 8
         elif stored_value[f] == 8:
             speaker.stop()
             time.sleep(duration)
-        
+
         # glide from previous tone on the rest
         else:
             note = scale[stored_value[f]]
