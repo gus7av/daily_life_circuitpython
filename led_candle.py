@@ -1,25 +1,17 @@
-import board
+import circuitpython_essentials as cp
 import time
-import digitalio
-import microcontroller
+import board
+from random import randint
 
-led = digitalio.DigitalInOut(board.LED)
-led.switch_to_output()
+led = cp.PWMOut(board.LED)
+previous = 0x8000
+flicker = 0x2000
 
 while True:
-    temperature = round(microcontroller.cpu.temperature)
-    print(temperature)
-    for i in range(8):
-        if temperature < 2 ** i:
-            pass
-        elif temperature % 2 ** (i + 1) >= 2 ** i:
-            led.value = True
-            time.sleep(0.5)
-            led.value = False
-            time.sleep(0.5)
-        else:
-            led.value = True
-            time.sleep(0.1)
-            led.value = False
-            time.sleep(0.9)
-    time.sleep(2)
+    value = randint(flicker, 0xFFFF - flicker)
+    step = min(256, max(-256, value - previous))
+    if step != 0:
+        for i in range(previous, value, step):
+            led.value = i + randint(-flicker, flicker)
+            time.sleep(0.001)
+    previous = value
