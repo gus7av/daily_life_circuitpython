@@ -9,8 +9,10 @@ led.switch_to_output()
 while True:
     temperature = round(microcontroller.cpu.temperature)
     print(temperature)
-    for i in range(5):
-        if temperature % 2 ** (i + 1) >= 2 ** i:
+    for i in range(8):
+        if temperature < 2 ** i:
+            pass
+        elif temperature % 2 ** (i + 1) >= 2 ** i:
             led.value = True
             time.sleep(0.5)
             led.value = False
